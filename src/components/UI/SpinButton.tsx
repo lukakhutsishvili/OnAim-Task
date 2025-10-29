@@ -88,8 +88,8 @@ export const PixiSpinButton: React.FC<PixiSpinButtonProps> = ({
     const baseColor = isActuallyDisabled
       ? 0x4c4c4c
       : isBonus
-      ? 0x00cc00
-      : 0x00a000;
+        ? 0x00cc00
+        : 0x00a000;
 
     g.clear();
     g.fill({ color: baseColor }).roundRect(-120, -35, 240, 70, 12).fill();

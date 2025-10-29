@@ -12,10 +12,10 @@ export const usePlayerMovement = (
   setPlayerPos: React.Dispatch<React.SetStateAction<number>>,
   setIsBonus: React.Dispatch<React.SetStateAction<boolean>>,
   isBonus: boolean,
-  freeSpinsLeft: number
+  freeSpinsLeft: number,
 ) => {
   // 👇 now supports PIXI.Graphics (your PlayerToken)
-const spriteRef = useRef<PIXI.Sprite>(null);
+  const spriteRef = useRef<PIXI.Sprite>(null);
 
   const movePlayer = (currentPos: number, steps: number, onEnd: () => void) => {
     if (!positions.length) return;

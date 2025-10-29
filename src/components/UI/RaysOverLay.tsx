@@ -51,7 +51,7 @@ export const RaysOverlay: React.FC<RaysOverlayProps> = ({
         .lineTo(Math.cos(angle) * RADIUS, Math.sin(angle) * RADIUS)
         .lineTo(
           Math.cos(angle + step) * RADIUS,
-          Math.sin(angle + step) * RADIUS
+          Math.sin(angle + step) * RADIUS,
         )
         .closePath()
         .fill();

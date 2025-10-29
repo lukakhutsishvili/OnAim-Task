@@ -30,12 +30,12 @@ export const WinPopup: React.FC<WinPopupProps> = ({
       gsap.fromTo(
         backdropRef.current,
         { opacity: 0 },
-        { opacity: 1, duration: 0.3 }
+        { opacity: 1, duration: 0.3 },
       );
       gsap.fromTo(
         popupRef.current,
         { scale: 0.5, opacity: 0, y: 100 },
-        { scale: 1, opacity: 1, y: 0, duration: 0.6, ease: "back.out(1.8)" }
+        { scale: 1, opacity: 1, y: 0, duration: 0.6, ease: "back.out(1.8)" },
       );
 
       // 🕒 Auto-close after short delay (with animation)

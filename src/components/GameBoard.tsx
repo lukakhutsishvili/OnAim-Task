@@ -40,7 +40,6 @@ export const GameBoard = () => {
   const [config, setConfig] = useState<typeof mockData | null>(null);
   const [lastRoll, setLastRoll] = useState<number | null>(null);
   const [buttonDisabled, setButtonDisabled] = useState(false); // ⛔ disable spin during auto
-  
 
   useEffect(() => {
     const isMock =
@@ -69,7 +68,7 @@ export const GameBoard = () => {
     setPlayerPos,
     setIsBonus,
     isBonus,
-    freeSpinsLeft
+    freeSpinsLeft,
   );
 
   const drawCell = (g: PIXI.Graphics) => {
@@ -95,7 +94,7 @@ export const GameBoard = () => {
         duration: 0.5,
         ease: "back.out(1.7)",
         stagger: 0.02,
-      }
+      },
     );
   }, [selectedBet]);
 
@@ -143,8 +142,7 @@ export const GameBoard = () => {
       setTimeout(() => {
         startSpin();
         sounds.spin?.play?.();
-   
-      }, 500); 
+      }, 500);
     }
 
     if (isBonus && freeSpinsLeft === 0) {
@@ -250,15 +248,15 @@ export const GameBoard = () => {
                 />
 
                 {/* 🧍 Player */}
-{playerTexture && (
-  <PlayerToken
-    ref={spriteRef}
-    texture={playerTexture}
-    x={positions[playerPos].x + offsetX + cellSize / 2}
-    y={positions[playerPos].y + offsetY + cellSize / 2}
-    isBonus={isBonus}
-  />
-)}
+                {playerTexture && (
+                  <PlayerToken
+                    ref={spriteRef}
+                    texture={playerTexture}
+                    x={positions[playerPos].x + offsetX + cellSize / 2}
+                    y={positions[playerPos].y + offsetY + cellSize / 2}
+                    isBonus={isBonus}
+                  />
+                )}
 
                 {/* 💵 Bet Selector */}
                 <PixiBetSelector
@@ -268,7 +266,7 @@ export const GameBoard = () => {
                   selectedLabel={selectedBet.label}
                   onSelect={(label) =>
                     setSelectedBet(
-                      config.betOptions.find((b) => b.label === label)!
+                      config.betOptions.find((b) => b.label === label)!,
                     )
                   }
                 />

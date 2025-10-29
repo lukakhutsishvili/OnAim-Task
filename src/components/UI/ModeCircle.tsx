@@ -21,7 +21,7 @@ export const ModeCircle: React.FC<ModeCircleProps> = ({ isBonus, x, y }) => {
       <pixiGraphics
         draw={(g) => {
           g.clear();
-          g.fill({ color: 0x00A300 }) // base green fill
+          g.fill({ color: 0x00a300 }) // base green fill
             .stroke({ color: 0x0d4a1d, width: 4 }) // dark green border
             .circle(0, 0, 85)
             .fill()

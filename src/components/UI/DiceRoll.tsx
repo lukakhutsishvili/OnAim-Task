@@ -139,7 +139,11 @@ export const DiceRoll: React.FC<DiceRollProps> = ({
   return (
     <pixiContainer x={appSize / 2} y={appSize / 1.6}>
       <pixiGraphics ref={leftDie} x={-50} draw={(g) => drawDie(g, leftValue)} />
-      <pixiGraphics ref={rightDie} x={50} draw={(g) => drawDie(g, rightValue)} />
+      <pixiGraphics
+        ref={rightDie}
+        x={50}
+        draw={(g) => drawDie(g, rightValue)}
+      />
     </pixiContainer>
   );
 };

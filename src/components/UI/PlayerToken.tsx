@@ -133,5 +133,5 @@ export const PlayerToken = forwardRef<PIXI.Sprite, PlayerTokenProps>(
         </pixiContainer>
       </>
     );
-  }
+  },
 );

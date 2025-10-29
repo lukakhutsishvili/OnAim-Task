@@ -31,7 +31,8 @@ export const useSpinHandler = ({
   setLastRoll,
   config,
 }: SpinHandlerProps) => {
-  const isMock = new URLSearchParams(window.location.search).get("mock") === "true";
+  const isMock =
+    new URLSearchParams(window.location.search).get("mock") === "true";
   const service = isMock ? mockService : apiService;
 
   // 🎲 Step 1: fetch roll

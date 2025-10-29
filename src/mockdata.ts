@@ -1,23 +1,22 @@
-
 export interface Prize {
-  position: number;        // 0..15 (outer ring)
-  prizeName: string;       // "Coin", "Star", "Bonus" etc.
-  prizeValue: number;      // 0 for Bonus tile
-  icon?: string;           // optional icon url/emoji
+  position: number; // 0..15 (outer ring)
+  prizeName: string; // "Coin", "Star", "Bonus" etc.
+  prizeValue: number; // 0 for Bonus tile
+  icon?: string; // optional icon url/emoji
 }
 
 export interface BetOption {
-  cost: number;            // play cost
-  multiplier: number;      // win multiplier
-  label: string;           // e.g. "1x", "2x"
+  cost: number; // play cost
+  multiplier: number; // win multiplier
+  label: string; // e.g. "1x", "2x"
 }
 
 export interface InitialData {
-  defaultGamePrizes: Prize[];   // length 16, includes exactly one "Bonus"
-  bonusGamePrizes: Prize[];     // length 16, includes the same bonus position (value 0)
-  freeSpinsOnBonus: number;     // e.g., 3
-  betOptions: BetOption[];      // e.g., [{cost:10,multiplier:1,label:'1x'}, ...]
-  balance: number;              // current user balance
+  defaultGamePrizes: Prize[]; // length 16, includes exactly one "Bonus"
+  bonusGamePrizes: Prize[]; // length 16, includes the same bonus position (value 0)
+  freeSpinsOnBonus: number; // e.g., 3
+  betOptions: BetOption[]; // e.g., [{cost:10,multiplier:1,label:'1x'}, ...]
+  balance: number; // current user balance
 }
 
 export const mockData: InitialData = {
