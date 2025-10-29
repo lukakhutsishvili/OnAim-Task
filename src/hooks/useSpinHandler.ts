@@ -1,12 +1,12 @@
 import { mockService } from "../mockService";
 import { apiService } from "../apiService";
 import { sounds } from "../components/gameLogic/Sounds";
-import { mockData } from "../mockdata";
+import { mockData, Prize } from "../mockdata";
 
 interface SpinHandlerProps {
   movePlayer: (currentPos: number, steps: number, onEnd: () => void) => void;
   playerPos: number;
-  activePrizes: any[];
+  activePrizes: Prize[];
   selectedBet: { cost: number; multiplier: number };
   setBalance: React.Dispatch<React.SetStateAction<number>>;
   setPopupPrize: React.Dispatch<React.SetStateAction<string>>;
