@@ -18,8 +18,8 @@ export const RaysOverlay: React.FC<RaysOverlayProps> = ({
   const CENTER = CANVAS_SIZE / 2;
   const RADIUS = 650;
 
-  // 🌀 Slightly faster spin in bonus mode
-  const baseSpeed = isBonus ? 0.0032 : 0.002;
+  // 🌀 Faster spin during bonus
+  const baseSpeed = isBonus ? 0.004 : 0.002;
 
   // Continuous rotation
   useTick((ticker) => {
@@ -28,16 +28,16 @@ export const RaysOverlay: React.FC<RaysOverlayProps> = ({
     }
   });
 
-  // ☀️ Draw two-tone rays (enhanced contrast in bonus)
+  // ☀️ Draw alternating rays with two rich colors
   useEffect(() => {
     const g = gRef.current;
     if (!g) return;
 
     g.clear();
 
-    // 🎨 Slightly brighter, more saturated palette in bonus
-    const baseColor = isBonus ? 0x9b6b00 : 0x0d4a1d; // golden brown vs deep forest
-    const brightColor = isBonus ? 0xffd700 : 0x00e600; // gold vs vivid green
+    // 🎨 Deep metallic + bright gold tones
+    const baseColor = isBonus ? 0x7a4c00 : 0x0d4a1d; // dark bronze vs deep forest
+    const brightColor = isBonus ? 0xffd700 : 0x00e600; // bright gold vs vivid green
 
     const rayCount = 24;
     const step = (Math.PI * 2) / rayCount;

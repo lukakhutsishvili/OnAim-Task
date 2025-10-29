@@ -1,3 +1,4 @@
+// src/components/GameBoard.tsx
 import { useEffect, useState, useMemo, useRef, useLayoutEffect } from "react";
 import { Application, extend } from "@pixi/react";
 import * as PIXI from "pixi.js";
@@ -17,6 +18,7 @@ import { mockService } from "../mockService";
 import { apiService } from "../apiService";
 import { LoaderUI } from "./UI/Loader";
 import { sounds } from "./gameLogic/Sounds";
+import { PlayerToken } from "./UI/PlayerToken";
 
 extend({
   Graphics: PIXI.Graphics,
@@ -38,6 +40,7 @@ export const GameBoard = () => {
   const [config, setConfig] = useState<typeof mockData | null>(null);
   const [lastRoll, setLastRoll] = useState<number | null>(null);
   const [buttonDisabled, setButtonDisabled] = useState(false); // ⛔ disable spin during auto
+  
 
   useEffect(() => {
     const isMock =
@@ -128,14 +131,7 @@ export const GameBoard = () => {
     }
   };
 
-  // 🎯 Now decreases free spin right after dice animation stops
   const handleDiceFinish = (sum: number) => {
-    // 💎 Decrease free spin immediately (before movement)
-    if (isBonus && freeSpinsLeft > 0) {
-      setFreeSpinsLeft((prev) => Math.max(0, prev - 1));
-    }
-
-    // Then continue to player movement and prize resolution
     resolveSpin(sum);
   };
 
@@ -147,7 +143,8 @@ export const GameBoard = () => {
       setTimeout(() => {
         startSpin();
         sounds.spin?.play?.();
-      }, 500);
+   
+      }, 500); 
     }
 
     if (isBonus && freeSpinsLeft === 0) {
@@ -164,7 +161,7 @@ export const GameBoard = () => {
       ) : (
         <div className="relative">
           {/* 💰 Top Info Bar */}
-          <div className="absolute top-2 left-13 z-50 mb-4 flex items-center justify-center gap-6 px-6 py-3 rounded-xl bg-linear-to-r from-[#115c24] to-[#0b441b] border border-[#1a6d2c]/60 shadow-[0_0_15px_rgba(0,0,0,0.4)]">
+          <div className="  absolute top-2 left-13 z-50  mb-4 flex items-center justify-center gap-6 px-6 py-3 rounded-xl bg-linear-to-r from-[#115c24] to-[#0b441b] border border-[#1a6d2c]/60 shadow-[0_0_15px_rgba(0,0,0,0.4)]">
             <div className="flex items-center gap-2">
               <span className="text-[#aaffaa] font-bold text-xl drop-shadow-[0_1px_1px_rgba(0,0,0,0.4)]">
                 💵 Balance:
@@ -180,7 +177,8 @@ export const GameBoard = () => {
                   🎁 BONUS MODE
                 </span>
                 <span className="text-white text-lg font-semibold">
-                  ({freeSpinsLeft} free spin{freeSpinsLeft === 1 ? "" : "s"} left)
+                  ({freeSpinsLeft} free spin{freeSpinsLeft === 1 ? "" : "s"}{" "}
+                  left)
                 </span>
               </div>
             )}
@@ -252,17 +250,15 @@ export const GameBoard = () => {
                 />
 
                 {/* 🧍 Player */}
-                {playerTexture && (
-                  <pixiSprite
-                    ref={spriteRef}
-                    texture={playerTexture}
-                    anchor={0.5}
-                    x={positions[playerPos].x + offsetX + cellSize / 2}
-                    y={positions[playerPos].y + offsetY + cellSize / 2}
-                    width={70}
-                    height={70}
-                  />
-                )}
+{playerTexture && (
+  <PlayerToken
+    ref={spriteRef}
+    texture={playerTexture}
+    x={positions[playerPos].x + offsetX + cellSize / 2}
+    y={positions[playerPos].y + offsetY + cellSize / 2}
+    isBonus={isBonus}
+  />
+)}
 
                 {/* 💵 Bet Selector */}
                 <PixiBetSelector
@@ -290,7 +286,7 @@ export const GameBoard = () => {
                   triggerRoll={triggerRoll}
                   setTriggerRoll={setTriggerRoll}
                   onClick={startSpin}
-                  disabled={buttonDisabled}
+                  disabled={buttonDisabled} // ✅ triggers backend roll + dice animation
                 />
               </pixiContainer>
             </Application>
