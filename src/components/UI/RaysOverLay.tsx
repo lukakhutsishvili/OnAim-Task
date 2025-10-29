@@ -5,13 +5,11 @@ import { useTick } from "@pixi/react";
 interface RaysOverlayProps {
   isBonus?: boolean; // 🟡 triggers golden mode
   alpha?: number;
-  speed?: number;
 }
 
 export const RaysOverlay: React.FC<RaysOverlayProps> = ({
   isBonus = false,
   alpha = 0.25,
-  speed = 0.002,
 }) => {
   const gRef = useRef<PIXI.Graphics>(null);
   const containerRef = useRef<PIXI.Container>(null);
@@ -20,31 +18,33 @@ export const RaysOverlay: React.FC<RaysOverlayProps> = ({
   const CENTER = CANVAS_SIZE / 2;
   const RADIUS = 650;
 
-  // 🌀 Continuous rotation
+  // 🌀 Slightly faster spin in bonus mode
+  const baseSpeed = isBonus ? 0.0032 : 0.002;
+
+  // Continuous rotation
   useTick((ticker) => {
     if (containerRef.current) {
-      containerRef.current.rotation += speed * ticker.deltaTime;
+      containerRef.current.rotation += baseSpeed * ticker.deltaTime;
     }
   });
 
-  // ☀️ Draw two-tone rays (color depends on mode)
+  // ☀️ Draw two-tone rays (enhanced contrast in bonus)
   useEffect(() => {
     const g = gRef.current;
     if (!g) return;
 
     g.clear();
 
-    // 🎨 Dynamic palette
-    const baseColor = isBonus ? 0x7a5b00 : 0x0d4a1d; // deep gold / dark green
-    const brightColor = isBonus ? 0xffe600 : 0x00cc00; // vivid yellow / vivid green
+    // 🎨 Slightly brighter, more saturated palette in bonus
+    const baseColor = isBonus ? 0x9b6b00 : 0x0d4a1d; // golden brown vs deep forest
+    const brightColor = isBonus ? 0xffd700 : 0x00e600; // gold vs vivid green
 
     const rayCount = 24;
     const step = (Math.PI * 2) / rayCount;
 
     for (let i = 0; i < rayCount; i++) {
       const angle = i * step;
-      const isBright = i % 2 === 0;
-      const color = isBright ? brightColor : baseColor;
+      const color = i % 2 === 0 ? brightColor : baseColor;
 
       g.fill({ color, alpha })
         .moveTo(0, 0)

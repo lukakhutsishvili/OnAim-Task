@@ -40,7 +40,8 @@ export const PixiSpinButton: React.FC<PixiSpinButtonProps> = ({
 
   // 🔊 Handle click
   const handleSpinClick = async () => {
-    if (triggerRoll || disabled) return;
+    // ⛔ Prevent clicking when bonus mode is active
+    if (triggerRoll || disabled || isBonus) return;
 
     sounds.spin?.play?.();
     offsetRef.current = 8;
@@ -81,7 +82,10 @@ export const PixiSpinButton: React.FC<PixiSpinButtonProps> = ({
     const g = buttonRef.current;
     if (!g) return;
 
-    const baseColor = disabled
+    // 💡 Bonus mode = disabled state
+    const isActuallyDisabled = disabled || isBonus;
+
+    const baseColor = isActuallyDisabled
       ? 0x4c4c4c
       : isBonus
       ? 0x00cc00
@@ -90,32 +94,27 @@ export const PixiSpinButton: React.FC<PixiSpinButtonProps> = ({
     g.clear();
     g.fill({ color: baseColor }).roundRect(-120, -35, 240, 70, 12).fill();
 
-    g.eventMode = disabled ? "none" : "static";
-    g.cursor = disabled ? "not-allowed" : "pointer";
+    g.eventMode = isActuallyDisabled ? "none" : "static";
+    g.cursor = isActuallyDisabled ? "not-allowed" : "pointer";
     g.removeAllListeners();
 
-    if (!disabled) {
+    if (!isActuallyDisabled) {
       g.on("pointertap", handleSpinClick);
-      g.on("pointerover", () => {
-        g.alpha = 0.85;
-      });
-      g.on("pointerout", () => {
-        g.alpha = 1;
-      });
+      g.on("pointerover", () => (g.alpha = 0.85));
+      g.on("pointerout", () => (g.alpha = 1));
     } else {
       g.alpha = 0.6;
     }
   }, [isBonus, triggerRoll, balance, selectedBet, disabled]);
 
-  // 🧾 Text label (✨ Updated)
+  // 🧾 Text label
   useEffect(() => {
     if (!textRef.current) return;
 
-    if (disabled) {
-      textRef.current.text = "SPINNING...";
-    } else if (isBonus) {
-      // 🌀 Auto spin mode text
-      textRef.current.text = `AUTO SPIN (${freeSpinsLeft})`;
+    if (disabled || isBonus) {
+      textRef.current.text = isBonus
+        ? `AUTO SPIN (${freeSpinsLeft})`
+        : "SPINNING...";
     } else {
       textRef.current.text = `SPIN -$${selectedBet.cost}`;
     }

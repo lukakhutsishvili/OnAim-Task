@@ -17,6 +17,7 @@ import { PixiBetSelector } from "./UI/BetSelector";
 import { mockService } from "../mockService";
 import { apiService } from "../apiService";
 import { LoaderUI } from "./UI/Loader";
+import { sounds } from "./gameLogic/Sounds";
 
 extend({
   Graphics: PIXI.Graphics,
@@ -38,6 +39,7 @@ export const GameBoard = () => {
   const [config, setConfig] = useState<typeof mockData | null>(null);
   const [lastRoll, setLastRoll] = useState<number | null>(null);
   const [buttonDisabled, setButtonDisabled] = useState(false); // ⛔ disable spin during auto
+  
 
   useEffect(() => {
     const isMock =
@@ -139,7 +141,9 @@ export const GameBoard = () => {
     if (isBonus && freeSpinsLeft > 0) {
       setTimeout(() => {
         startSpin();
-      }, 800);
+        sounds.spin?.play?.();
+   
+      }, 500); 
     }
 
     if (isBonus && freeSpinsLeft === 0) {
@@ -154,9 +158,9 @@ export const GameBoard = () => {
       {!config || !selectedBet || !assetsLoaded ? (
         <LoaderUI />
       ) : (
-        <>
+        <div className="relative">
           {/* 💰 Top Info Bar */}
-          <div className=" absolute top-9 left-13 z-50  mb-4 flex items-center justify-center gap-6 px-6 py-3 rounded-xl bg-linear-to-r from-[#115c24] to-[#0b441b] border border-[#1a6d2c]/60 shadow-[0_0_15px_rgba(0,0,0,0.4)]">
+          <div className="  absolute top-2 left-13 z-50  mb-4 flex items-center justify-center gap-6 px-6 py-3 rounded-xl bg-linear-to-r from-[#115c24] to-[#0b441b] border border-[#1a6d2c]/60 shadow-[0_0_15px_rgba(0,0,0,0.4)]">
             <div className="flex items-center gap-2">
               <span className="text-[#aaffaa] font-bold text-xl drop-shadow-[0_1px_1px_rgba(0,0,0,0.4)]">
                 💵 Balance:
@@ -298,7 +302,7 @@ export const GameBoard = () => {
             isBonusMode={isBonus}
             multiplier={selectedBet.multiplier}
           />
-        </>
+        </div>
       )}
     </div>
   );
