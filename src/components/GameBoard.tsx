@@ -42,8 +42,9 @@ export const GameBoard = () => {
   const [buttonDisabled, setButtonDisabled] = useState(false); // ⛔ disable spin during auto
 
   useEffect(() => {
-    const isMock =
-      new URLSearchParams(window.location.search).get("mock") === "true";
+    const params = new URLSearchParams(window.location.search);
+    const mockParam = params.get("mock");
+    const isMock = mockParam === null || mockParam === "true";
     const service = isMock ? mockService : apiService;
     service.getInitialData().then((data) => {
       setConfig(data);
